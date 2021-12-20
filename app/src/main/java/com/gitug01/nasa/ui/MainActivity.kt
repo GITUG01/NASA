@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import com.gitug01.nasa.R
 import com.gitug01.nasa.domain.ImageRepo
 import com.gitug01.nasa.domain.app
+import com.gitug01.nasa.domain.entity.ImageEntity
 import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImage {
+class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity {
 
     private val imageRepo: ImageRepo by lazy { app.imageRepo }
 
@@ -50,9 +51,9 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImage {
         }
     }
 
-    override suspend fun getImageUrl(): String {
+    override suspend fun getFilmEntity(): ImageEntity {
         return CoroutineScope(Dispatchers.Main).async {
-            imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc").url
+            imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc")
         }.await()
     }
 }

@@ -7,19 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.bumptech.glide.Glide
+import android.widget.TextView
 import com.gitug01.nasa.R
+import com.gitug01.nasa.domain.entity.ImageEntity
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 
 class MainScreenFragment : Fragment() {
 
     private var image: ImageView? = null
-    private var gettingImage: GettingImage? = null
-    private var imageUrl: String? = null
+    private var gettingImageEntity: GettingImageEntity? = null
+    private var title: TextView? = null
+    private var description: TextView? = null
 
     override fun onAttach(context: Context) {
-        this.gettingImage = context as GettingImage
+        this.gettingImageEntity = context as GettingImageEntity
         super.onAttach(context)
     }
 
@@ -44,22 +46,23 @@ class MainScreenFragment : Fragment() {
 
     private fun init(view: View){
         image = view.findViewById(R.id.fragment_image)
+        title = view.findViewById(R.id.title_tv)
+        description = view.findViewById(R.id.description_tv)
     }
 
     private fun assignmentValues(){
         CoroutineScope(Dispatchers.IO).launch {
-            val url = gettingImage!!.getImageUrl()
+            val filmEntity = gettingImageEntity!!.getFilmEntity()
             withContext(Dispatchers.Main){
-                Picasso.get().load(url).into(image)
+                title?.text = filmEntity.title
+                Picasso.get().load(filmEntity.url).into(image)
+                description?.text = filmEntity.explanation
             }
         }
-    }
-
-    private fun setImage(){
 
     }
 
-    interface GettingImage {
-        suspend fun getImageUrl(): String
+    interface GettingImageEntity {
+        suspend fun getFilmEntity(): ImageEntity
     }
 }

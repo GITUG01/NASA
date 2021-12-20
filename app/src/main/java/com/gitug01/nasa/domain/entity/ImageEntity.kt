@@ -4,5 +4,6 @@ data class ImageEntity(
     var copyright: String,
     var date: String,
     var url: String,
-    var title: String
+    var title: String,
+    var explanation: String
 )

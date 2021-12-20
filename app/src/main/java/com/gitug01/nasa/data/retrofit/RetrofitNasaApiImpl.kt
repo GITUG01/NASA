@@ -27,8 +27,9 @@ class RetrofitNasaApiImpl : ImageRepo {
             val date = result?.date ?: ""
             val url = result?.url ?: ""
             val title = result?.title ?: ""
+            var explanation = result?.explanation ?: ""
 
-            val resultImageEntity = ImageEntity(copyright, date, url, title)
+            val resultImageEntity = ImageEntity(copyright, date, url, title, explanation)
             return@async resultImageEntity
         }.await()
     }
