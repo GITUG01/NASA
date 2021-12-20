@@ -1,7 +1,15 @@
 package com.gitug01.nasa.ui
 
+import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.annotation.IdRes
+import androidx.annotation.NonNull
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.gitug01.nasa.R
 import com.gitug01.nasa.domain.ImageRepo
 import com.gitug01.nasa.domain.app
@@ -16,15 +24,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var imageEtity: ImageEntity? = null
+        replaceFragment(R.id.fragments_container, MainScreenFragment(), false)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val a = imageRepo.getImageOfTheDayAsync("EMV8EipQtIhSIQACkadTQOSSC6oES7H5cfM6xTjZ")
-            withContext(Dispatchers.Main){
-                imageEtity = a
-            }
+    }
+
+    private fun replaceFragment(
+        @IdRes containerViewId: Int,
+        @NonNull fragment: Fragment,
+        addToBackStack: Boolean
+    ) {
+        when (addToBackStack) {
+            false -> supportFragmentManager.beginTransaction().replace(containerViewId, fragment)
+                .commit()
+            true -> supportFragmentManager.beginTransaction().replace(containerViewId, fragment)
+                .addToBackStack(null).commit()
         }
-
-
     }
 }
