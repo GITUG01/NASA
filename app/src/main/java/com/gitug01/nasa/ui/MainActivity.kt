@@ -1,22 +1,17 @@
 package com.gitug01.nasa.ui
 
-import android.content.Context
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.gitug01.nasa.R
 import com.gitug01.nasa.domain.ImageRepo
 import com.gitug01.nasa.domain.app
-import com.gitug01.nasa.domain.entity.ImageEntity
 import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImage {
 
     private val imageRepo: ImageRepo by lazy { app.imageRepo }
 
@@ -25,6 +20,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         replaceFragment(R.id.fragments_container, MainScreenFragment(), false)
+
+        var b: String? = null
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val a = imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc").url
+            Log.d("@@@", b.toString())
+            withContext(Dispatchers.Main){
+                b = a
+                Log.d("test", b.toString())
+            }
+
+        }
+
+        Log.d("@@@", b.toString())
 
     }
 
@@ -39,5 +48,11 @@ class MainActivity : AppCompatActivity() {
             true -> supportFragmentManager.beginTransaction().replace(containerViewId, fragment)
                 .addToBackStack(null).commit()
         }
+    }
+
+    override suspend fun getImageUrl(): String {
+        return CoroutineScope(Dispatchers.Main).async {
+            imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc").url
+        }.await()
     }
 }
