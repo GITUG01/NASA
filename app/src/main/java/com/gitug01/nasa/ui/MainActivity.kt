@@ -18,23 +18,13 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setTheme(R.style.Theme_Moon)
+
         setContentView(R.layout.activity_main)
 
         replaceFragment(R.id.fragments_container, MainScreenFragment(), false)
 
-        var b: String? = null
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val a = imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc").url
-            Log.d("@@@", b.toString())
-            withContext(Dispatchers.Main){
-                b = a
-                Log.d("test", b.toString())
-            }
-
-        }
-
-        Log.d("@@@", b.toString())
 
     }
 
