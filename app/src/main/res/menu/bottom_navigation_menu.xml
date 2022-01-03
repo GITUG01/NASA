@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/first"
-        android:icon="@android:drawable/btn_radio"
-        android:title="@android:string/cancel" />
+        android:id="@+id/moon"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="moon" />
 
     <item
-        android:id="@+id/second"
-        android:icon="@android:drawable/btn_radio"
-        android:title="@android:string/copy" />
+        android:id="@+id/mars"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="mars" />
 
     <item
-        android:id="@+id/third"
-        android:icon="@android:drawable/btn_radio"
-        android:title="@android:string/cut" />
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="settings" />
 
 </menu>
