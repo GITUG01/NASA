@@ -27,7 +27,7 @@
 
         <item name="colorPrimary">@color/turquoise</item>
         <item name="colorOnPrimary">@color/turquoise</item>
-        <item name="customBgColor">@color/lightTurquoise</item>
+        <item name="customBgColor">@color/turquoise</item>
 
     </style>
 

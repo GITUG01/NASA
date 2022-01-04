@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toolbar
-import androidx.annotation.IdRes
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -24,6 +23,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
     private val imageRepo: ImageRepo by lazy { app.imageRepo }
     private var toolbar: Toolbar? = null
     private var bottomNavigationMenu: BottomNavigationView? = null
+    private lateinit var mainScreenFragment: MainScreenFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,27 +34,35 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
 
         setContentView(R.layout.activity_main)
 
-        openFragment(R.id.fragments_container, MainScreenFragment(), false)
+        mainScreenFragment = MainScreenFragment()
+        openFragment(mainScreenFragment, false)
 
         bottomNavigationMenu = findViewById(R.id.bottom_navigation1)
 
-        val a = NavigationBarView.OnItemSelectedListener {
-            Toast.makeText(this, it.title, Toast.LENGTH_SHORT).show()
+        val listener = NavigationBarView.OnItemSelectedListener {
+            val fragment = when (it.itemId) {
+                R.id.mars -> MarsFragment()
+                R.id.moon -> MoonFragment()
+                R.id.settings -> SettingsFragment()
+                else -> MarsFragment()
+            }
+            openFragment(fragment, true)
             true
         }
 
-        bottomNavigationMenu!!.setOnItemSelectedListener(a)
+        bottomNavigationMenu!!.setOnItemSelectedListener(listener)
     }
 
     private fun openFragment(
-        @IdRes containerViewId: Int,
         @NonNull fragment: Fragment,
         addToBackStack: Boolean
     ) {
         when (addToBackStack) {
-            false -> supportFragmentManager.beginTransaction().replace(containerViewId, fragment)
+            false -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragments_container, fragment)
                 .commit()
-            true -> supportFragmentManager.beginTransaction().replace(containerViewId, fragment)
+            true -> supportFragmentManager.beginTransaction()
+                .replace(R.id.fragments_container, fragment)
                 .addToBackStack(null).commit()
         }
     }
@@ -76,5 +84,14 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
         return CoroutineScope(Dispatchers.Main).async {
             imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc")
         }.await()
+    }
+
+    override fun onBackPressed() {
+        if (mainScreenFragment.isResumed){
+            super.onBackPressed()
+        } else {
+            openFragment(MainScreenFragment(), false)
+        }
+
     }
 }
