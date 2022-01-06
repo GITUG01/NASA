@@ -59,8 +59,8 @@ class RetrofitNasaApiImpl : ImageRepo {
             val first = bbb.AT
             val second = bbb.First_UTC
             val third = bbb.HWS
-//            val fourth = bbb.mx
-            return@async MarsWeatherMainEntity(first, second, third)
+            val fourth = bbb.PRE
+            return@async MarsWeatherMainEntity(first, second, third, fourth)
         }.await())
     }
 }

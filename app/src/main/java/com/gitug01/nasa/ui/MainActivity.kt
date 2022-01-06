@@ -13,13 +13,14 @@ import com.gitug01.nasa.R
 import com.gitug01.nasa.domain.ImageRepo
 import com.gitug01.nasa.domain.app
 import com.gitug01.nasa.domain.entity.ImageEntity
+import com.gitug01.nasa.domain.entity.MarsWeatherMainEntity
+import com.gitug01.nasa.domain.entity.O
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 
-class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity {
+class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity,
+    MarsFragment.GetMarsWeather {
 
     private val imageRepo: ImageRepo by lazy { app.imageRepo }
     private var toolbar: Toolbar? = null
@@ -82,7 +83,6 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
     }
 
     override suspend fun getFilmEntity(): ImageEntity {
-
         return CoroutineScope(Dispatchers.Main).async {
             imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc")
         }.await()
@@ -95,5 +95,10 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
             openFragment(MainScreenFragment(), false)
         }
 
+    }
+
+    override suspend fun getWeather(): MarsWeatherMainEntity {
+
+        return imageRepo.getMarsWeather("9Lnh7edQ4hlKh7nfYeifGYW2xlfGZwR0dHfmqHzc", "json", "1.0")
     }
 }
