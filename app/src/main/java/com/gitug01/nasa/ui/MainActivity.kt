@@ -1,6 +1,7 @@
 package com.gitug01.nasa.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity(), MainScreenFragment.GettingImageEntity 
     }
 
     override suspend fun getFilmEntity(): ImageEntity {
+
         return CoroutineScope(Dispatchers.Main).async {
             imageRepo.getImageOfTheDayAsync("PfzeIs0lTnaqJMoDY1KaUgfWGvylfblrObPK5trc")
         }.await()

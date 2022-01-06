@@ -8,6 +8,7 @@
     tools:context=".ui.MarsFragment">
 
     <TextView
+        android:id="@+id/mars_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -16,12 +17,14 @@
         android:textSize="30sp" />
 
     <ImageView
+        android:id="@+id/mars_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp" />
 
     <TextView
+        android:id="@+id/mars_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Today the weather is"
