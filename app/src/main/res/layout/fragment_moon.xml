@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,28 +8,86 @@
     android:orientation="vertical"
     tools:context=".ui.MarsFragment">
 
-    <TextView
-        android:id="@+id/moon_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/moon"
-        android:layout_margin="8dp"
-        android:textSize="30sp" />
-
-    <ImageView
-        android:id="@+id/moon_image"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bal_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp" />
+        android:layout_height="250dp">
 
-    <TextView
-        android:id="@+id/moon_description"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:collapsedTitleTextAppearance="@string/moon"
+            app:contentScrim="@color/turquoise"
+            app:expandedTitleMarginStart="64dp"
+            app:expandedTitleMarginEnd="48dp"
+            app:expandedTitleTextAppearance="@string/today_image"
+            app:layout_scrollFlags="scroll|snap"
+            app:scrimAnimationDuration="1000">
+
+            <ImageView
+                android:id="@+id/moon_toolbar_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="pin"
+                android:src="@drawable/ic_launcher_background"/>
+
+            <TextView
+                android:id="@+id/moon_toolbar_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="Moon x2"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Today the weather is"
-        android:textSize="16dp"
-        android:layout_margin="8dp"/>
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/moon_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:text="@string/moon"
+                android:textSize="30sp" />
+
+            <ImageView
+                android:id="@+id/moon_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp" />
+
+            <TextView
+                android:id="@+id/moon_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textSize="16dp"
+                tools:text="Today the weather is" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="80sp"
+                android:text="hhhhhhhhhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhkkkkkk"/>
+
+        </LinearLayout>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
